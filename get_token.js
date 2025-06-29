@@ -1,7 +1,7 @@
 const axios = require('axios');
 
-const consumerKey = '4bf64DtcD6T0cn7UTFiG8fwzm90Zw9FjawyVQxUACdbzInpS';      // <-- Replace with your key
-const consumerSecret = '0EL44svbL08ZfqvNw8LxSZAXXeb4faGcPI2jDbx5BnRCQm4l67nYQABbwvA5xxL2';// <-- Replace with your secret
+const consumerKey = '';      // <-- Replace with your key
+const consumerSecret = '';// <-- Replace with your secret
 
 const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString('base64');
 

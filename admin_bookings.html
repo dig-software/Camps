@@ -35,7 +35,7 @@
       </tr>
     </thead>
     <tbody>
-      <!-- Bookings will be loaded here -->
+      
     </tbody>
   </table>
   <script>
@@ -50,7 +50,7 @@
     });
 
     function loadBookings() {
-      // Fetch bookings from backend
+      
       fetch('http://192.168.1.100:3000/bookings/data')
         .then(res => res.json())
         .then(bookings => {

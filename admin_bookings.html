@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - All Bookings</title>
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #888; padding: 8px; text-align: left; }
+    th { background: #eee; }
+    button { padding: 4px 10px; }
+  </style>
+</head>
+<body>
+  <h2>All Bookings</h2>
+  
+  <label for="status-filter">Filter by Payment Status:</label>
+  <select id="status-filter">
+    <option value="">All</option>
+    <option value="pending">Pending</option>
+    <option value="paid">Paid</option>
+  </select>
+
+  <label for="camp-filter">Filter by Camp:</label>
+  <select id="camp-filter">
+    <option value="">All</option>
+    <option value="Amboseli Camp">Amboseli Camp</option>
+    <option value="Masai Mara Reserve Camp">Masai Mara Reserve Camp</option>
+    <option value="Nairobi Camps">Nairobi Camps</option>
+  </select>
+  
+  <table id="bookings-table">
+    <thead>
+      <tr>
+        <th>ID</th><th>Name</th><th>Email</th><th>phone_number</th><th>Camp Name</th><th>Price</th><th>Dates</th><th>Payment Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Bookings will be loaded here -->
+    </tbody>
+  </table>
+  <script>
+    const statusFilter = document.getElementById('status-filter');
+    const campFilter = document.getElementById('camp-filter');
+    
+    statusFilter.addEventListener('change', () => {
+      loadBookings();
+    });
+    campFilter.addEventListener('change', () => {
+      loadBookings();
+    });
+
+    function loadBookings() {
+      // Fetch bookings from backend
+      fetch('http://192.168.1.100:3000/bookings/data')
+        .then(res => res.json())
+        .then(bookings => {
+          const tbody = document.querySelector('#bookings-table tbody');
+          tbody.innerHTML = '';
+          const status = statusFilter.value;
+          const camp = campFilter.value;
+          bookings
+            .filter(row => (!status || row.payment_status === status))
+            .filter(row => (!camp || row.camp_name === camp))
+            .forEach(row => {
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                <td>${row.id}</td>
+                <td>${row.name}</td>
+                <td>${row.email}</td>
+                <td>${row.phone_number}</td>
+                <td>${row.camp_name}</td>
+                <td>${row.price}</td>
+                <td>${row.dates}</td>
+                <td>${row.payment_status || ''}</td>
+              `;
+              tbody.appendChild(tr);
+            });
+        });
+    }
+
+    // Initial load
+    loadBookings();
+  </script>
+</body>
+</html>

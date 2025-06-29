@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json()); 
 app.use(express.static(__dirname));
 
-// MySQL connection
+
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -29,12 +29,12 @@ db.connect((err) => {
   }
 });
 
-// Handle booking form POST
+
 app.post('/book', (req, res) => {
-  console.log('Received body:', req.body); // <-- Add this
+  console.log('Received body:', req.body);
   const { name, email, phone_number, camp, dates } = req.body;
 
-  // Map camp to campName and price
+  
   let campName = '', price = '';
   switch (camp) {
     case 'amboseli':
@@ -51,28 +51,28 @@ app.post('/book', (req, res) => {
       break;
   }
 
-  // Log the values to debug
+  
   console.log('Booking values:', { name, email, phone_number, campName, price, dates });
   if (!name || !email || !campName || !price || !dates) {
     console.error('Missing required booking field');
     return res.status(400).json({ error: 'Missing required booking field' });
   }
 
-  // Add payment_status to your insert
+  
   db.query(
     'INSERT INTO bookings (name, email, phone_number, camp_name, price, dates, payment_status) VALUES (?, ?, ?, ?, ?, ?, ?)',
     [name, email, phone_number, campName, price, dates, 'pending'],
     (err, result) => {
       if (err) {
-        console.error('Insert error:', err); // This MUST be here!
+        console.error('Insert error:', err); 
         res.status(500).json({ error: 'Database error' });
       } else {
         res.json({ 
           name, 
           email, 
           Phone_Number: phone_number, 
-          camp: camp, // This is the code, e.g. "amboseli"
-          camp_name: campName, // This is the readable name, e.g. "Amboseli Camp"
+          camp: camp, 
+          camp_name: campName, 
           price,
           dates 
         });
@@ -89,7 +89,7 @@ app.post('/admin/login', (req, res) => {
     (err, results) => {
       if (err) return res.status(500).send('DB error');
       if (results.length > 0) {
-        // Login successful, redirect to bookings page
+        
         res.redirect('/admin_bookings.html');
       } else {
         res.redirect>('/admin_login.html');
@@ -106,7 +106,7 @@ app.get('/bookings/data', (req, res) => {
 });
 
 app.post('/pay', async (req, res) => {
-  console.log('PAY endpoint received:', req.body); // <-- Add this line
+  console.log('PAY endpoint received:', req.body); 
   const { phone_number, camp } = req.body;
   let price = '';
   switch (camp) {

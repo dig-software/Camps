@@ -1,10 +1,10 @@
 const axios = require('axios');
 
 // Replace with your actual credentials:
-const consumerKey = '4bf64DtcD6T0cn7UTFiG8fwzm90Zw9FjawyVQxUACdbzInpS';
-const consumerSecret = '0EL44svbL08ZfqvNw8LxSZAXXeb4faGcPI2jDbx5BnRCQm4l67nYQABbwvA5xxL2';
+const consumerKey = '';
+const consumerSecret = '';
 const BusinessShortCode = '174379';
-const Passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
+const Passkey = '';
 
 const pad = n => n < 10 ? '0' + n : n;
 

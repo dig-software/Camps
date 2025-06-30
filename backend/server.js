@@ -15,12 +15,7 @@ app.use(express.static(__dirname));
 
 
 // MySQL connection
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '', 
-  database: 'camps_db'
-});
+const db = mysql.createConnection(process.env.DATABASE_URL);
 
 db.connect((err) => {
   if (err) {

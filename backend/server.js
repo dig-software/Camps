@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json()); 
 app.use(express.static(__dirname));
 
+
 // MySQL connection
 const db = mysql.createConnection({
   host: 'localhost',
@@ -122,6 +123,9 @@ app.post('/pay', async (req, res) => {
   } catch (error) {
     res.json({ success: false, error: error.message });
   }
+});
+app.get('/', (req, res) => {
+  res.send('Backend is live and ready to process bookings and payments!');
 });
 
 app.listen(port,  '0.0.0.0',() => {

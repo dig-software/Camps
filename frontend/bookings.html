@@ -73,14 +73,14 @@
                 return;
             }
             data.dates = `${data.start_date} to ${data.end_date}`;
-            fetch('https://camps-backend.up.railway.app/pay', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
+            fetch('https://camps-production.up.railway.app/pay', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ ... })   
+  });
+            } 
+ 
+            
             .then(response => response.json())
             .then(result => {
                 if (result.success) {

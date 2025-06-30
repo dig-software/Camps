@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Booking Confirmation - Camps.com</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <h1>Booking Confirmation</h1>
+    <div id="confirmation">
+        <div id="print-area">
+        <p>Thank you for your booking! Here are your details:</p>
+        <ul>
+            <li><strong>Name:</strong> <span id="conf-name"></span></li>
+            <li><strong>Email:</strong> <span id="conf-email"></span></li>
+            <li><strong>Phone_Number:</strong> <span id="conf-Phone_Number"></span></li>
+            <li><strong>Camp:</strong> <span id="conf-camp"></span></li>
+            <li><strong>Dates:</strong> <span id="conf-dates"></span></li>
+            <li><strong>Price:</strong><span id="conf-price"></span></li>
+        </ul>
+        </div>
+        <button onclick="window.print()">Print Receipt</button>
+        <button id="mail-btn">Mail Receipt</button>
+    </div>
+    <a href="Welcome.html">Back to Home</a>
+    <script>
+        // Parse query parameters from the URL
+        function getQueryParams() {
+            const params = {};
+            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
+                params[key] = decodeURIComponent(value.replace(/\+/g, ' '));
+            });
+            return params;
+        }
+
+        const params = getQueryParams();
+        document.getElementById('conf-name').textContent = params.name || '';
+        document.getElementById('conf-email').textContent = params.email || '';
+        document.getElementById('conf-Phone_Number').textContent = params.Phone_Number || '';
+        document.getElementById('conf-camp').textContent = params.camp_name || params.camp || '';
+        document.getElementById('conf-dates').textContent = params.dates || '';
+
+        // Mail Receipt functionality
+        document.getElementById('mail-btn').onclick = function() {
+            const subject = encodeURIComponent('Your Camps.com Booking Receipt');
+            const body = encodeURIComponent(
+                `Thank you for your booking!\n\n` +
+                `Name: ${params.name || ''}\n` +
+                `Email: ${params.email || ''}\n` +
+                `Phone_Number: ${params.Phone_Number || ''}\n` +
+                `Camp: ${params.camp || ''}\n` +
+                `Dates: ${params.dates || ''}\n`
+            );
+            window.location.href = `mailto:${params.email || ''}?subject=${subject}&body=${body}`;
+        };
+        const campPrices = {
+            'amboseli': 'KSH 5,000',
+            'masai_mara': 'KSH 4,500',
+            'nairobi': 'KSH 8,500'
+        };
+        document.getElementById('conf-price').textContent = campPrices[params.camp] || '';
+    </script>
+</body>
+</html>
